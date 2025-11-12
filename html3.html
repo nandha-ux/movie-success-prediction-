@@ -1,0 +1,137 @@
+import React, { useState } from "react";
+
+export default function MuscleBuildingHomePage() {
+  const [bmr, setBmr] = useState(null);
+  const [formData, setFormData] = useState({ weight: '', height: '', age: '', gender: 'male' });
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const calculateBMR = () => {
+    const { weight, height, age, gender } = formData;
+    const w = parseFloat(weight);
+    const h = parseFloat(height);
+    const a = parseFloat(age);
+
+    let result = 0;
+    if (gender === "male") {
+      result = 10 * w + 6.25 * h - 5 * a + 5;
+    } else {
+      result = 10 * w + 6.25 * h - 5 * a - 161;
+    }
+    setBmr(result.toFixed(0));
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-white font-sans">
+      {/* Hero Section */}
+      <header className="relative h-[90vh] flex items-center justify-center text-center px-6">
+        <img
+          src="https://images.unsplash.com/photo-1605296867304-46d5465a13f1?auto=format&fit=crop&w=1950&q=80"
+          alt="Muscle background"
+          className="absolute inset-0 w-full h-full object-cover brightness-50"
+        />
+        <div className="relative z-10 max-w-3xl">
+          <h1 className="text-5xl md:text-6xl font-extrabold mb-4">
+            Build Muscle. Transform Yourself.
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-200 mb-6">
+            Get personalized workouts, expert nutrition, and progress tracking tools.
+          </p>
+          <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 font-semibold rounded-full transition">
+            Start Your Journey
+          </button>
+        </div>
+      </header>
+
+      {/* Features Section */}
+      <section className="py-20 px-6 grid gap-10 md:grid-cols-3 max-w-6xl mx-auto">
+        <div className="bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition">
+          <h2 className="text-2xl font-bold mb-2">🏋️‍♂️ Custom Workouts</h2>
+          <p className="text-gray-300">
+            Tailored training plans for all levels—whether you're bulking or cutting.
+          </p>
+        </div>
+        <div className="bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition">
+          <h2 className="text-2xl font-bold mb-2">🥗 Meal Plans</h2>
+          <p className="text-gray-300">
+            Learn how to eat for strength and size with diet plans made by experts.
+          </p>
+        </div>
+        <div className="bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition">
+          <h2 className="text-2xl font-bold mb-2">📈 Progress Tracker</h2>
+          <p className="text-gray-300">
+            Log your lifts, track body metrics, and monitor your results.
+          </p>
+        </div>
+      </section>
+
+      {/* BMR Calculator */}
+      <section className="bg-gray-800 py-12 px-6 text-center max-w-3xl mx-auto rounded-2xl mb-12">
+        <h2 className="text-3xl font-bold mb-4">🔥 BMR Calculator</h2>
+        <div className="grid md:grid-cols-2 gap-4 mb-4">
+          <input name="weight" value={formData.weight} onChange={handleInput} placeholder="Weight (kg)" className="p-2 rounded text-black" />
+          <input name="height" value={formData.height} onChange={handleInput} placeholder="Height (cm)" className="p-2 rounded text-black" />
+          <input name="age" value={formData.age} onChange={handleInput} placeholder="Age" className="p-2 rounded text-black" />
+          <select name="gender" value={formData.gender} onChange={handleInput} className="p-2 rounded text-black">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <button onClick={calculateBMR} className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full">
+          Calculate BMR
+        </button>
+        {bmr && <p className="mt-4 text-lg">Your BMR is: <span className="font-bold">{bmr} kcal/day</span></p>}
+      </section>
+
+      {/* Sample Workout and Diet Plans */}
+      <section className="max-w-5xl mx-auto px-6 pb-20">
+        <h2 className="text-3xl font-bold mb-6 text-center">💪 Full Program by Level</h2>
+
+        <div className="mb-12">
+          <h3 className="text-2xl font-semibold text-red-500 mb-2">🔰 Beginner Program (3 Days/Week)</h3>
+          <p className="mb-2">Full-body strength and form building + ~2,500 kcal/day</p>
+          <ul className="list-disc list-inside text-gray-300">
+            <li>🏋️ Monday: Squat, Push-Ups, Dumbbell Row, Lunges, Plank</li>
+            <li>🏋️ Wednesday: Deadlift, Incline Push-Ups, Lat Pulldown, Leg Curl, Bicycle Crunch</li>
+            <li>🏋️ Friday: Goblet Squat, Bench Press, Cable Row, Step-Ups, Plank</li>
+            <li>🥗 Sample Meal: Eggs, Toast, Chicken & Rice, Greek Yogurt, Peanut Butter Shake</li>
+          </ul>
+        </div>
+
+        <div className="mb-12">
+          <h3 className="text-2xl font-semibold text-yellow-400 mb-2">⚙️ Intermediate Program (4 Days/Week)</h3>
+          <p className="mb-2">Upper/Lower split + ~3,000 kcal/day</p>
+          <ul className="list-disc list-inside text-gray-300">
+            <li>💪 Monday (Upper): Bench Press, Pull-Ups, Shoulder Press, Bicep Curls, Triceps Pushdown</li>
+            <li>🏋️ Tuesday (Lower): Squat, RDL, Leg Press, Calf Raises, Leg Raises</li>
+            <li>💪 Thursday (Upper): Incline Bench, Row, Arnold Press, Preacher Curl, Skullcrushers</li>
+            <li>🏋️ Friday (Lower): Front Squat, Deadlift, Hamstring Curl, Calf Machine, Russian Twist</li>
+            <li>🥗 Sample Meal: Oats + Whey, Chicken Wrap, Pasta + Veggies, Mass Gainer Shake</li>
+          </ul>
+        </div>
+
+        <div className="mb-12">
+          <h3 className="text-2xl font-semibold text-green-400 mb-2">🔥 Advanced Program (6 Days/Week)</h3>
+          <p className="mb-2">Push/Pull/Legs split + 3,500+ kcal/day</p>
+          <ul className="list-disc list-inside text-gray-300">
+            <li>🟥 Monday (Push): Bench, Overhead Press, Incline DB, Lateral Raise, Dips</li>
+            <li>🟦 Tuesday (Pull): Deadlift, Pull-Ups, Barbell Row, Face Pulls, Hammer Curl</li>
+            <li>🟩 Wednesday (Legs): Squats, Lunges, Ham Curl, Calf Raises, Hanging Leg Raise</li>
+            <li>🟥 Thursday (Push): Incline Bench, Dumbbell Press, Cable Fly, Overhead Extension</li>
+            <li>🟦 Friday (Pull): Rack Pulls, Chin-Ups, T-Bar Row, EZ Curl, Shrugs</li>
+            <li>🟩 Saturday (Legs): Front Squat, Bulgarian Split Squat, Leg Press, Core Circuit</li>
+            <li>🥗 Sample Meal: 6 Meals/day w/ Steak, Salmon, Whole Eggs, Oats, Avocados, Shakes</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="text-center py-8 text-gray-400 border-t border-gray-700">
+        &copy; 2025 MuscleForge. All Rights Reserved.
+      </footer>
+    </div>
+  );
+}
