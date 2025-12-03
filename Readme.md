@@ -1,9 +1,6 @@
 # Movie-Success-Predictor
 
-### **Members of this project :**
-- Mayukh Bhowmick
-- Rounak Hazra
-- Abesh Biswas
+
 
 ### **Python Libraries** used for making this project :
 - BeautifulSoap
